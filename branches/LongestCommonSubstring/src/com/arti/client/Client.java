@@ -1,6 +1,8 @@
 package com.arti.client;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -10,7 +12,7 @@ public class Client {
 	public static void main(String[] args) throws Exception {
 
 		Client http = new Client();
-		System.out.println("\nTesting 2 - Send Http POST request");
+		System.out.println("\nSending Http POST requests");
 		http.sendPost(TestScript.requestJsonStringNullOrEmpty);
 		http.sendPost(TestScript.requestJsonStringDuplicate);
 		http.sendPost(TestScript.requestJsonStringInvalidJson);
@@ -38,16 +40,16 @@ public class Client {
 		System.out.println("Response Message : " + con.getResponseMessage());
 		
 
-//		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-//		String inputLine;
-//		StringBuffer response = new StringBuffer();
-//
-//		while ((inputLine = in.readLine()) != null) {
-//			response.append(inputLine);
-//		}
-//		in.close();
-//
-//		// print result
-//		System.out.println(response.toString());
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+
+		// print result
+		System.out.println(response.toString());
 	}
 }
