@@ -9,6 +9,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.arti.util.StringUtil;
@@ -18,15 +20,18 @@ import com.arti.util.Validate;
 public class LcsService {
 	
 	@POST
-	public Response getLCS(String requestJsonString) {
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getLCS(String requestJsonString) {
 		Response response = new Validate().isValidJsonString(requestJsonString);
 		if (response.getStatus() == 200) {
 			List<String> stringValues = StringUtil.getSetOfString(requestJsonString);
 			Set<String> stringValuesSet = new HashSet<String>(stringValues);
 			String lcs = new LcsServiceHelper().findLCS(stringValuesSet);
-			return Response.status(200).entity(lcs).build();
+			//return Response.status(200).entity(lcs).build();
+			return lcs;
 		} else {
-			return response;
+			return response.getEntity().toString();
 		}	
 	}
 	
